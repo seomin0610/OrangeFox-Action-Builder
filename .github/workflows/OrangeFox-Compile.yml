@@ -18,13 +18,13 @@ on:
         - 12.1
         - 14.1
       DEVICE_TREE:
-        description: 'OrangeFox Device Tree'
+        description: 'OrangeFox에 사용할 디바이스 트리'
         required: true
-        default: 'https://github.com/ymdzq/OFRP-device_xiaomi_mondrian'
+        default: 'https://github.com/seomin0610/OrangeFox_lenovo_TB-J706F'
       DEVICE_TREE_BRANCH:
-        description: 'OrangeFox Device Tree Branch'
+        description: 'OrangeFox 디바이스 트리의 브런치'
         required: true
-        default: 'fox_12.1-a16'
+        default: 'main'
       DEVICE_PATH:
         description: 'Specify your Device Path'
         required: true
