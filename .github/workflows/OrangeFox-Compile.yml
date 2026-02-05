@@ -167,6 +167,15 @@ jobs:
         git clone ${{ inputs.DEVICE_TREE }} -b ${{ inputs.DEVICE_TREE_BRANCH }} ./${{ inputs.DEVICE_PATH }}
         cd ${{ inputs.DEVICE_PATH }}
         echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
+        # If vendor blobs are bundled inside the device tree, move them to the proper location.
+        VENDOR_SRC="${GITHUB_WORKSPACE}/OrangeFox/fox_${{ inputs.MANIFEST_BRANCH }}/${{ inputs.DEVICE_PATH }}/vendor/lenovo/${{ inputs.DEVICE_NAME }}"
+        VENDOR_DST="${GITHUB_WORKSPACE}/OrangeFox/fox_${{ inputs.MANIFEST_BRANCH }}/vendor/lenovo/${{ inputs.DEVICE_NAME }}"
+        if [ -d "$VENDOR_SRC" ]; then
+          mkdir -p "$(dirname "$VENDOR_DST")"
+          cp -a "$VENDOR_SRC" "$VENDOR_DST"
+          rm -rf "${GITHUB_WORKSPACE}/OrangeFox/fox_${{ inputs.MANIFEST_BRANCH }}/${{ inputs.DEVICE_PATH }}/vendor"
+          echo "Moved bundled vendor blobs to $VENDOR_DST"
+        fi
 
     - name: Update OrangeFox Built-in Magisk
       run: |
